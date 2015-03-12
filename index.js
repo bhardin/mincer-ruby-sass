@@ -20,7 +20,7 @@ var Template    = Mincer.Template;
 var prop        = require('mincer/lib/mincer/common').prop;
 var path        = require('path');
 var fs          = require('fs');
-var sh          = require('execSync');
+var sh          = require('child_process');
 var temp        = require('temp');
 var includeDirs = [];
 
@@ -62,7 +62,7 @@ RubySassEngine.prototype.evaluate = function (context, locals) {
 
   fs.writeFileSync(scssInputPath, this.data);
 
-  var exec = sh.exec(cmd.join(' '));
+  var exec = sh.execSync(cmd.join(' '));
 
   if (!fs.existsSync(dependencyPath)) {
     throw new Error('Could not load dependent files from Sass: file does not exist.\n' + exec.stdout);
